@@ -39,19 +39,36 @@ public class PlayerControl : MonoBehaviour
     void HandleMovement()
     {
         Vector3 inputDirection = GetInput();
-        float targetAngle = cam != null ? cam.eulerAngles.y : 0;
-        Vector3 rotatedMoveDirection = Quaternion.Euler(0f, targetAngle, 0f) * inputDirection;
-        moveDirection = rotatedMoveDirection;
+        if (hasInput)
+        {
+            float targetAngle = cam != null ? cam.eulerAngles.y : 0;
+            Vector3 rotatedMoveDirection = Quaternion.Euler(0f, targetAngle, 0f) * inputDirection;
+            moveDirection += rotatedMoveDirection * acceleration * Time.deltaTime;
+        }
+        else
+        {
+            moveDirection = Vector3.Lerp(
+            moveDirection,
+            Vector3.zero,
+            deceleration * Time.deltaTime
+            );
+        }
+
+        if (moveDirection.magnitude > 1)
+        {
+            moveDirection.Normalize();
+        }
+        
         bool wasMoving = isMoving;
-        isMoving = moveDirection.magnitude > 0.1f;
+        isMoving = hasInput || moveDirection.magnitude > 0.1f;
 
         if (!isMoving && wasMoving)
         {
-            PlayerCamera.Instance.SetFov(60, 0.1f);
+            PlayerCamera.Instance.SetFov(60, 0.2f);
         }
         else if (isMoving && !wasMoving)
         {
-            PlayerCamera.Instance.SetFov(70, 0.1f);
+            PlayerCamera.Instance.SetFov(70, 0.2f);
         }
         
         if (isMoving)
@@ -61,11 +78,11 @@ public class PlayerControl : MonoBehaviour
 
             if (wasRunning && !isRunning)
             {
-                PlayerCamera.Instance.SetFov(70, 0.1f);
+                PlayerCamera.Instance.SetFov(70, 0.2f);
             }
             else if (!wasRunning && isRunning)
             {
-                PlayerCamera.Instance.SetFov(90, 0.1f);
+                PlayerCamera.Instance.SetFov(90, 0.2f);
             }
         }
     }

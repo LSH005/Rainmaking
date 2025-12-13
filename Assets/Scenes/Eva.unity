@@ -610,7 +610,7 @@ MonoBehaviour:
   jumpPower: 1
   gravityPower: -19.62
   acceleration: 5
-  deceleration: 10
+  deceleration: 7
   cam: {fileID: 862836539}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
