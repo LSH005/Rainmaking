@@ -1,11 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    private float volume = 1.0f;
+    float volume = 1.0f;
+    Dictionary<AudioSource, float> activeAudio = new Dictionary<AudioSource, float>();
 
     private void Awake()
     {
@@ -16,30 +18,107 @@ public class AudioManager : MonoBehaviour
     public void SetVolume(float newVolume)
     {
         volume = Mathf.Clamp01(newVolume);
-        ResetAllSoundVolume();
+        ResetActiveAudioVolume();
     }
 
-    private void ResetAllSoundVolume()
+    public float GetVolume() => volume;
+
+    void ResetActiveAudioVolume()
     {
-       
+        var keysToRemove = new List<AudioSource>();
+
+        foreach (var AS in activeAudio)
+        {
+            if (AS.Key == null)
+            {
+                keysToRemove.Add(AS.Key);
+                continue;
+            }
+            AS.Key.volume = volume * AS.Value;
+        }
+
+        foreach (var key in keysToRemove)
+        {
+            activeAudio.Remove(key);
+        }
     }
 
-    public void PlaysoundAtPoint
+    void Playsound
         (AudioClip clip, Vector3 point, string soundName = "TempAudio",
-        float volumeMultiple = 1.0f, float pitch = 1.0f)
+        float volumeMultiple = 1.0f, float pitch = 1.0f, bool is3D = true, bool isLoop = false)
     {
         if (clip == null) return;
 
-        GameObject tempGO = new GameObject(soundName);
+        var tempGO = new GameObject(soundName);
         tempGO.transform.position = point;
+        tempGO.transform.SetParent(transform);
 
-        AudioSource audioSource = tempGO.AddComponent<AudioSource>();
-        audioSource.clip = clip;
-        audioSource.spatialBlend = 1.0f;
+        var AS = tempGO.AddComponent<AudioSource>();
+        AS.clip = clip;
+        AS.volume = volume * volumeMultiple;
+        AS.pitch = pitch;
+        AS.spatialBlend = is3D ? 1.0f : 0.0f;
+        AS.loop = isLoop;
+        AS.Play();
 
-        audioSource.volume = volume * volumeMultiple;
+        activeAudio.Add(AS, volumeMultiple);
 
-        audioSource.Play();
-        Object.Destroy(tempGO, clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale) + 1);
+        if (!isLoop)
+        {
+            float soundDelay = clip.length + 0.3887f;
+            StartCoroutine(CleanupAudioSource(AS, soundDelay));
+            Object.Destroy(tempGO, soundDelay);
+        }
     }
+    IEnumerator CleanupAudioSource(AudioSource AS, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        activeAudio.Remove(AS);
+    }
+
+    public void Play3DSound
+        (AudioClip clip, Vector3 point, string soundName = "TempAudio",
+        float volumeMultiple = 1.0f, float pitch = 1.0f, bool isLoop = false)
+    {
+        Playsound(clip, point, soundName, volumeMultiple, pitch, true, isLoop);
+    }
+
+    public void Play2DSound(AudioClip clip, string soundName = "TempAudio",
+        float volumeMultiple = 1.0f, float pitch = 1.0f, bool isLoop = false)
+    {
+        Playsound(clip, Vector3.zero, soundName, volumeMultiple, pitch, false, isLoop);
+    }
+
+    public void StopSound(string soundName = "")
+    {
+        var keysToRemove = new List<AudioSource>();
+
+        foreach (var AS in activeAudio.Keys)
+        {
+            if (AS == null)
+            {
+                keysToRemove.Add(AS);
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(soundName))
+            {
+                Destroy(AS.gameObject);
+                keysToRemove.Add(AS);
+                continue;
+            }
+
+            if (AS.gameObject.name == soundName)
+            {
+                Destroy(AS.gameObject);
+                keysToRemove.Add(AS);
+            }
+        }
+
+        foreach (var key in keysToRemove)
+        {
+            activeAudio.Remove(key);
+        }
+    }
+
 }
