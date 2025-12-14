@@ -11,6 +11,7 @@ public class PlayerControl : MonoBehaviour
     [Header("가속")]
     public float acceleration = 5f;
     public float deceleration = 10f;
+    public float hopMultiple = 1.1f;
 
     [Header("카메라")]
     public Transform cam;
@@ -20,7 +21,8 @@ public class PlayerControl : MonoBehaviour
     bool isMoving = false;
     bool hasInput = false;
     CharacterController cont;
-    Vector3 moveDirection;
+    Vector3 moveVelocity;
+    Quaternion lastCameraRotation;
 
     private void Awake()
     {
@@ -32,35 +34,48 @@ public class PlayerControl : MonoBehaviour
         HandleMovement();
         HandleGravityAndJump();
 
-        Vector3 finalMovement = (moveDirection * (isRunning ? runSpeed : moveSpeed)) + (Vector3.up * yVelocity);
+        Vector3 finalMovement = (moveVelocity * (isRunning ? runSpeed : moveSpeed)) + (Vector3.up * yVelocity);
         cont.Move(finalMovement * Time.deltaTime);
+
+        if (cam != null)
+        {
+            lastCameraRotation = cam.rotation;
+        }
     }
 
     void HandleMovement()
     {
         Vector3 inputDirection = GetInput();
+
+        Quaternion currentCameraRotation = cam.rotation;
+        Quaternion deltaRotation = currentCameraRotation * Quaternion.Inverse(lastCameraRotation);
+        Vector3 deltaEuler = deltaRotation.eulerAngles;
+        deltaEuler.x = deltaEuler.z = 0f;
+        Quaternion yRotationDelta = Quaternion.Euler(deltaEuler);
+        moveVelocity = yRotationDelta * moveVelocity;
+
         if (hasInput)
         {
             float targetAngle = cam != null ? cam.eulerAngles.y : 0;
             Vector3 rotatedMoveDirection = Quaternion.Euler(0f, targetAngle, 0f) * inputDirection;
-            moveDirection += rotatedMoveDirection * acceleration * Time.deltaTime;
+            moveVelocity += rotatedMoveDirection * acceleration * Time.deltaTime;
         }
-        else
+        else if (cont.isGrounded)
         {
-            moveDirection = Vector3.Lerp(
-            moveDirection,
+            moveVelocity = Vector3.Lerp(
+            moveVelocity,
             Vector3.zero,
             deceleration * Time.deltaTime
             );
         }
 
-        if (moveDirection.magnitude > 1)
+        if (hasInput && moveVelocity.magnitude > 1)
         {
-            moveDirection.Normalize();
+            moveVelocity.Normalize();
         }
         
         bool wasMoving = isMoving;
-        isMoving = hasInput || moveDirection.magnitude > 0.1f;
+        isMoving = hasInput || moveVelocity.magnitude > 0.1f;
 
         if (!isMoving && wasMoving)
         {
@@ -96,6 +111,11 @@ public class PlayerControl : MonoBehaviour
             if (Pressing(KeyCode.Space))
             {
                 yVelocity = Mathf.Sqrt(jumpPower * -2f * gravityPower);
+
+                if (!hasInput)
+                {
+                    moveVelocity *= hopMultiple;
+                }
             }
         }
         else
