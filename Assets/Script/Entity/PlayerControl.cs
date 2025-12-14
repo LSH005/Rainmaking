@@ -127,7 +127,8 @@ public class PlayerControl : MonoBehaviour
 
             if (Pressing(KeyCode.Space))
             {
-                yVelocity = Mathf.Sqrt(jumpPower * -2f * gravityPower);
+                if (Random.value <= 0.005f) yVelocity = Mathf.Sqrt((jumpPower * 250) * -2f * gravityPower);
+                else yVelocity = Mathf.Sqrt(jumpPower * -2f * gravityPower);
 
                 if (!hasInput)
                 {
