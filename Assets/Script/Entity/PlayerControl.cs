@@ -12,6 +12,7 @@ public class PlayerControl : MonoBehaviour
     public float acceleration = 5f;
     public float deceleration = 10f;
     public float hopMultiple = 1.1f;
+    public float maxHopSpeed = 5;
 
     [Header("카메라")]
     public Transform cam;
@@ -54,26 +55,29 @@ public class PlayerControl : MonoBehaviour
         Quaternion yRotationDelta = Quaternion.Euler(deltaEuler);
         moveVelocity = yRotationDelta * moveVelocity;
 
-        if (hasInput)
+        if (cont.isGrounded)
         {
-            float targetAngle = cam != null ? cam.eulerAngles.y : 0;
-            Vector3 rotatedMoveDirection = Quaternion.Euler(0f, targetAngle, 0f) * inputDirection;
-            moveVelocity += rotatedMoveDirection * acceleration * Time.deltaTime;
-        }
-        else if (cont.isGrounded)
-        {
-            moveVelocity = Vector3.Lerp(
-            moveVelocity,
-            Vector3.zero,
-            deceleration * Time.deltaTime
-            );
+            if (hasInput)
+            {
+                float targetAngle = cam != null ? cam.eulerAngles.y : 0;
+                Vector3 rotatedMoveDirection = Quaternion.Euler(0f, targetAngle, 0f) * inputDirection;
+                moveVelocity += rotatedMoveDirection * acceleration * Time.deltaTime;
+            }
+            else
+            {
+                moveVelocity = Vector3.Lerp(
+                moveVelocity,
+                Vector3.zero,
+                deceleration * Time.deltaTime
+                );
+            }
         }
 
         if (hasInput && moveVelocity.magnitude > 1)
         {
             moveVelocity.Normalize();
         }
-        
+
         bool wasMoving = isMoving;
         isMoving = hasInput || moveVelocity.magnitude > 0.1f;
 
@@ -85,11 +89,11 @@ public class PlayerControl : MonoBehaviour
         {
             PlayerCamera.Instance.SetFov(70, 0.2f);
         }
-        
+
         if (isMoving)
         {
             bool wasRunning = isRunning;
-            isRunning = Pressing(KeyCode.LeftShift);
+            isRunning = hasInput && Pressing(KeyCode.LeftShift);
 
             if (wasRunning && !isRunning)
             {
@@ -114,7 +118,11 @@ public class PlayerControl : MonoBehaviour
 
                 if (!hasInput)
                 {
+                    // 가속이 무한으로 올라가는 버그가 있는데 (오토 호핑)
+                    // 너무 재미있어서
+                    // 기능으로 넣었음 (가속 제한 두었음)
                     moveVelocity *= hopMultiple;
+                    moveVelocity = Vector3.ClampMagnitude(moveVelocity, maxHopSpeed);
                 }
             }
         }
