@@ -21,6 +21,7 @@ public class PlayerControl : MonoBehaviour
     bool isRunning = false;
     bool isMoving = false;
     bool hasInput = false;
+    bool isColliding = false;
     CharacterController cont;
     Vector3 moveVelocity;
     Quaternion lastCameraRotation;
@@ -32,11 +33,18 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        isColliding = false;
+
         HandleMovement();
         HandleGravityAndJump();
 
         Vector3 finalMovement = (moveVelocity * (isRunning ? runSpeed : moveSpeed)) + (Vector3.up * yVelocity);
         cont.Move(finalMovement * Time.deltaTime);
+
+        if (isColliding)
+        {
+            Deceleration();
+        }
 
         if (cam != null)
         {
@@ -65,11 +73,7 @@ public class PlayerControl : MonoBehaviour
             }
             else
             {
-                moveVelocity = Vector3.Lerp(
-                moveVelocity,
-                Vector3.zero,
-                deceleration * Time.deltaTime
-                );
+                Deceleration();
             }
         }
 
@@ -104,6 +108,15 @@ public class PlayerControl : MonoBehaviour
                 PlayerCamera.Instance.SetFov(90, 0.2f);
             }
         }
+    }
+
+    void Deceleration()
+    {
+        moveVelocity = Vector3.Lerp(
+                moveVelocity,
+                Vector3.zero,
+                deceleration * Time.deltaTime
+                );
     }
 
     void HandleGravityAndJump()
@@ -153,6 +166,12 @@ public class PlayerControl : MonoBehaviour
 
         return MoveInput;
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        isColliding = true;
+    }
+
 
     bool isSingleInput(KeyCode key1, KeyCode key2) => Input.GetKey(key1) ^ Input.GetKey(key2);
 
