@@ -63,18 +63,15 @@ public class PlayerControl : MonoBehaviour
         Quaternion yRotationDelta = Quaternion.Euler(deltaEuler);
         moveVelocity = yRotationDelta * moveVelocity;
 
-        if (cont.isGrounded)
+        if (hasInput)
         {
-            if (hasInput)
-            {
-                float targetAngle = cam != null ? cam.eulerAngles.y : 0;
-                Vector3 rotatedMoveDirection = Quaternion.Euler(0f, targetAngle, 0f) * inputDirection;
-                moveVelocity += rotatedMoveDirection * acceleration * Time.deltaTime;
-            }
-            else
-            {
-                Deceleration();
-            }
+            float targetAngle = cam != null ? cam.eulerAngles.y : 0;
+            Vector3 rotatedMoveDirection = Quaternion.Euler(0f, targetAngle, 0f) * inputDirection;
+            moveVelocity += rotatedMoveDirection * acceleration * Time.deltaTime;
+        }
+        else if (cont.isGrounded)
+        {
+            Deceleration();
         }
 
         if (hasInput && moveVelocity.magnitude > 1)
@@ -127,6 +124,7 @@ public class PlayerControl : MonoBehaviour
 
             if (Pressing(KeyCode.Space))
             {
+                // 0.5% 의 확률로 원래의 250배의 달하는 점프력을 가짐
                 if (Random.value <= 0.005f) yVelocity = Mathf.Sqrt((jumpPower * 250) * -2f * gravityPower);
                 else yVelocity = Mathf.Sqrt(jumpPower * -2f * gravityPower);
 
