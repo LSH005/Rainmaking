@@ -1808,12 +1808,12 @@ GameObject:
   m_Component:
   - component: {fileID: 634134001}
   m_Layer: 0
-  m_Name: Map
+  m_Name: Temporary map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &634134001
 Transform:
   m_ObjectHideFlags: 0
@@ -2088,6 +2088,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 634134001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &682761750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 682761751}
+  - component: {fileID: 682761752}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &682761751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682761750}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.008459, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &682761752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682761750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb3ec4789cfd06648a0d89860c25162b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrain: {fileID: 2413033440052068942, guid: 9b230c0a1a1a5c041b28e47234e0e5da, type: 3}
+  width: 200
+  depth: 200
+  terrainGap: 10
+  maxHeight: 6
+  noiseScale: 2
 --- !u!1 &727155442
 GameObject:
   m_ObjectHideFlags: 0
@@ -4678,7 +4728,7 @@ Transform:
   m_GameObject: {fileID: 1727335444}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4729,7 +4779,7 @@ MonoBehaviour:
   gravityPower: -19.62
   acceleration: 5
   deceleration: 7
-  hopMultiple: 1.1
+  hopMultiple: 1.2
   maxHopSpeed: 5
   cam: {fileID: 862836539}
 --- !u!1 &1760055308
@@ -6284,6 +6334,7 @@ SceneRoots:
   - {fileID: 170370912}
   - {fileID: 1727335445}
   - {fileID: 2063141055}
-  - {fileID: 634134001}
   - {fileID: 1456868790}
   - {fileID: 135489034}
+  - {fileID: 682761751}
+  - {fileID: 634134001}
