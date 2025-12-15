@@ -1050,6 +1050,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7ade11e23e579dc409f4bbda452171b5, type: 3}
   - {fileID: 21300000, guid: 43c07ad1d03065149ba5e188f3a17391, type: 3}
   - {fileID: 21300000, guid: 59201bac76a4b144f823976e4bc1b4d6, type: 3}
+  - {fileID: 21300000, guid: 200b8838c2d53b241899e2df044f830b, type: 3}
+  - {fileID: 21300000, guid: 0b52cc3e1f9a86e4a99c11619315f608, type: 3}
+  - {fileID: 21300000, guid: ea8e9da017db1994db63c55fd63cae8b, type: 3}
   sounds:
   - music: {fileID: 8300000, guid: c0999da586ae5bd409e4911865d170b9, type: 3}
     musicName: ANDROMEDA - MONTAGEM COMA
@@ -1063,6 +1066,12 @@ MonoBehaviour:
     musicName: John Michael Howell - Circus
   - music: {fileID: 8300000, guid: 276e5e18834c5e1488ca29689bde5999, type: 3}
     musicName: John Michael Howell - Had Me At Goodbye
+  - music: {fileID: 8300000, guid: edeee7ff2d600144796ac23d031e41c2, type: 3}
+    musicName: "ZXKAI - NO BATID\xC3O"
+  - music: {fileID: 8300000, guid: e302f7dd26a8a4c4394124d875b806bd, type: 3}
+    musicName: MOONLGHT - Free Bird
+  - music: {fileID: 8300000, guid: febae919da96efe4a8c87d3373035690, type: 3}
+    musicName: DJ Asul - VAI VAI TRAIR (Slowed)
 --- !u!1 &365153605
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,7 +2146,7 @@ MonoBehaviour:
   depth: 200
   terrainGap: 10
   maxHeight: 6
-  noiseScale: 2
+  noiseScale: 20
 --- !u!1 &727155442
 GameObject:
   m_ObjectHideFlags: 0
