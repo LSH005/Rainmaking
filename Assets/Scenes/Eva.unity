@@ -2146,7 +2146,7 @@ MonoBehaviour:
   depth: 200
   terrainGap: 10
   maxHeight: 6
-  noiseScale: 20
+  noiseScale: 2
 --- !u!1 &727155442
 GameObject:
   m_ObjectHideFlags: 0
@@ -3261,7 +3261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: baacb80cadeef4a439cfd7bc0f378c35, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 31ccf96cd6767be45bbf6b71a3b7c58c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4788,8 +4788,8 @@ MonoBehaviour:
   gravityPower: -19.62
   acceleration: 5
   deceleration: 7
-  hopMultiple: 1.2
-  maxHopSpeed: 5
+  hopMultiple: 1.5
+  maxHopSpeed: 10
   cam: {fileID: 862836539}
 --- !u!1 &1760055308
 GameObject:
@@ -4848,7 +4848,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ANDROMEDA - MONTAGEM COMA
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

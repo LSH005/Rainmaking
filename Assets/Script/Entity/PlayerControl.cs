@@ -31,7 +31,7 @@ public class PlayerControl : MonoBehaviour
         cont = GetComponent<CharacterController>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         isColliding = false;
 
@@ -39,7 +39,7 @@ public class PlayerControl : MonoBehaviour
         HandleGravityAndJump();
 
         Vector3 finalMovement = (moveVelocity * (isRunning ? runSpeed : moveSpeed)) + (Vector3.up * yVelocity);
-        cont.Move(finalMovement * Time.deltaTime);
+        cont.Move(finalMovement * Time.fixedDeltaTime);
 
         if (isColliding)
         {
@@ -67,7 +67,7 @@ public class PlayerControl : MonoBehaviour
         {
             float targetAngle = cam != null ? cam.eulerAngles.y : 0;
             Vector3 rotatedMoveDirection = Quaternion.Euler(0f, targetAngle, 0f) * inputDirection;
-            moveVelocity += rotatedMoveDirection * acceleration * Time.deltaTime;
+            moveVelocity += rotatedMoveDirection * acceleration * Time.fixedDeltaTime;
         }
         else if (cont.isGrounded)
         {
@@ -112,7 +112,7 @@ public class PlayerControl : MonoBehaviour
         moveVelocity = Vector3.Lerp(
                 moveVelocity,
                 Vector3.zero,
-                deceleration * Time.deltaTime
+                deceleration * Time.fixedDeltaTime
                 );
     }
 
@@ -140,7 +140,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
-            yVelocity += gravityPower * Time.deltaTime;
+            yVelocity += gravityPower * Time.fixedDeltaTime;
         }
     }
 
