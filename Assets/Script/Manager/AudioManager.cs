@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
 
     float volume = 1.0f;
     Dictionary<AudioSource, float> activeAudio = new Dictionary<AudioSource, float>();
+    // {오디오소스 : 소리 배수} 딕셔너리
 
     private void Awake()
     {
@@ -121,7 +122,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public AudioClip GetRandomSound(AudioClip[] clips)
+    public static AudioClip GetRandomSound(AudioClip[] clips)
     {
         if (clips == null || clips.Length == 0) return null;
         int randomIndex = Random.Range(0, clips.Length);
