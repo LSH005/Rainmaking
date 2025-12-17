@@ -30,7 +30,7 @@ public class Block : MonoBehaviour
     private void Destroy()
     {
         PlayDestorySound();
-        Instantiate(drop, transform.position, Quaternion.identity);
+        if (drop != null) Instantiate(drop, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }
