@@ -18,6 +18,8 @@ public class MapGenerator : MonoBehaviour
     {
         float offsetX = Random.Range(-9999f, 9999f);
         float offsetY = Random.Range(-9999f, 9999f);
+        int halfX = width / 2;
+        int HalfZ = depth / 2;
 
         for (int x = 0; x < width; x++)
         {
@@ -29,7 +31,7 @@ public class MapGenerator : MonoBehaviour
                 float noise = Mathf.PerlinNoise(nx, nz);
                 int y = Mathf.FloorToInt(noise * maxHeight);
 
-                SetBlock(x, y, z);
+                SetBlock(x - halfX, y, z - HalfZ);
             }
         }
 

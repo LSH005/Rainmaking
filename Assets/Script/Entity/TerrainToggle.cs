@@ -16,6 +16,10 @@ public class TerrainToggle : MonoBehaviour
         {
             terrain.ToggleObj(true);
         }
+        else if (other.gameObject.TryGetComponent<TerrainSpawner>(out TerrainSpawner terrainSpawner))
+        {
+            terrainSpawner.SpawnTerrain();
+        }
     }
 
     private void OnTriggerExit(Collider other)
