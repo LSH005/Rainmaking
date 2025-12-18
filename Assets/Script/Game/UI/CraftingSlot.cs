@@ -5,9 +5,11 @@ public class CraftingSlot : MonoBehaviour
 {
     public int ButtonNumber = 1;
     public Sprite emptySprite;
-    [HideInInspector] public CraftingManager manager;
+    
+
     Image image;
     Sprite blockSprite;
+    [HideInInspector] public CraftingManager manager;
     bool hasBlock;
     int binaryButtonID;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class ProbabilisticDestruction : MonoBehaviour
 {
     [Header("È®·ü")]
-    public int destroyProbability = 0;
+    public float destroyProbability = 99;
 
     void Start()
     {

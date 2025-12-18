@@ -5,6 +5,11 @@ public class GamePause : MonoBehaviour
     public static bool isPaused = false;
     public GameObject toggleObj;
 
+    private void Start()
+    {
+        if (toggleObj != null) toggleObj.SetActive(false);
+    }
+
     void Update()
     {
         if (Press(KeyCode.Escape))

@@ -28,11 +28,6 @@ public class PlayerHarvester : MonoBehaviour
         {
             Place();
         }
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            InventoryManager.instance.AddItem(ItemType.Block, 2);
-        }
     }
 
     void Harvest()

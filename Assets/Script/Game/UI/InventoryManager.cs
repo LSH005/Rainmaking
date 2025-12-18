@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     public Sprite pullImage;
 
     private int selectedIndex = -1;
+    bool hasSelectedSlot = false;
 
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class InventoryManager : MonoBehaviour
         if (index != selectedIndex)
         {
             selectedIndex = index;
+            hasSelectedSlot = true;
 
             foreach (InventorySlot slot in slots)
             {
@@ -74,6 +76,7 @@ public class InventoryManager : MonoBehaviour
             slot.SetColor(Color.gray);
         }
 
+        hasSelectedSlot = false;
         selectedIndex = -1;
     }
 
@@ -142,5 +145,19 @@ public class InventoryManager : MonoBehaviour
         }
 
         return airImage;
+    }
+
+    public ItemType GetSelectedItem()
+    {
+        if (hasSelectedSlot)
+        {
+            InventorySlot slot = slots[selectedIndex];
+            if (slot != null)
+            {
+                return slot.currentBlockType;
+            }
+        }
+        
+        return ItemType.Air;
     }
 }

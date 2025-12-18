@@ -17,12 +17,15 @@ public class Portal : MonoBehaviour
         if (player == null)
         {
             this.enabled = false;
+            Destroy(gameObject);
             return;
         }
 
         if (player.position.y <= targetY)
         {
             ScreenTransition.JustLoadScene(nextSceneName, "LoadingScene");
+            this.enabled = false;
+            Destroy(gameObject);
         }
     }
 }

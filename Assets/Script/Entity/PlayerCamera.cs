@@ -12,6 +12,7 @@ public class PlayerCamera : MonoBehaviour
     public Transform playerBody;
 
     float xRotation = 0f;
+    bool lastUp = false;
     Coroutine fovCoroutine;
     Camera cam;
 
@@ -43,8 +44,12 @@ public class PlayerCamera : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
         playerBody.Rotate(Vector3.up * mouseX, Space.World);
+
+        if ((lastUp && xRotation == 90) || (!lastUp && xRotation == -90))
+        {
+            UpDownCheck();
+        }
     }
 
     public void SetFov(float fov, float duration)
@@ -71,5 +76,10 @@ public class PlayerCamera : MonoBehaviour
             cam.fieldOfView = Mathf.Lerp(startFov, fov, t);
             yield return null;
         }
+    }
+
+    void UpDownCheck()
+    {
+        RainMakingManager.leftRainMakingTime = 3f;
     }
 }
