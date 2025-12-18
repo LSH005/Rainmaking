@@ -24,6 +24,15 @@ public class PlayerHarvester : MonoBehaviour
         {
             Harvest();
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Place();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            InventoryManager.instance.AddItem(ItemType.Block, 2);
+        }
     }
 
     void Harvest()
@@ -39,6 +48,29 @@ public class PlayerHarvester : MonoBehaviour
                 block.HitBlock(toolDamage);
             }
         }
+    }
+
+    void Place()
+    {
+        InventorySlot slot = InventoryManager.instance.GetSelectedInventorySlot();
+        if (slot == null) return;
+        if (slot.isEmptySlot || !slot.canPlace) return;
+
+        Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // 화면 중앙
+        if (Physics.Raycast(ray, out var hit, rayDistance, hitMask))
+        {
+            //Vector3 blockPos = AdjacentCellOnHitFace(hit);
+
+            MapGenerator.Instance.SetBlockVector3(hit.point);
+            slot.AddItemCount(-1);
+        }
+    }
+
+    static Vector3Int AdjacentCellOnHitFace(in RaycastHit hit)
+    {
+        Vector3 baseCenter = hit.collider.transform.position; // 맞춘 블록의 중심(정수 좌표(x,y,z)
+        Vector3 adjCenter = baseCenter + hit.normal; // 그 면의 바깥쪽으로 정확히 한 칸 이동
+        return Vector3Int.RoundToInt(adjCenter);
     }
 
 }

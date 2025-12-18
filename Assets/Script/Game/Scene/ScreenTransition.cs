@@ -88,6 +88,7 @@ public class ScreenTransition : MonoBehaviour
     {
         SetUI();
         SetUIObjectsActive(false);
+        InventoryManager.instance.ShowInventory(false);
 
         if (WaitTime1 > 0)
         {
@@ -154,6 +155,7 @@ public class ScreenTransition : MonoBehaviour
             yield return new WaitForSeconds(WaitTime2);
         }
 
+        InventoryManager.instance.ShowInventory(true);
         SetUIObjectsActive(true);
         isTransitioning = false;
     }

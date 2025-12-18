@@ -9,6 +9,7 @@ public class InventorySlot : MonoBehaviour
     public TextMeshProUGUI itemAmount;
     public ItemType currentBlockType;
     public bool isEmptySlot = true;
+    public bool canPlace = false;
 
     int count = 0;
 
@@ -26,6 +27,14 @@ public class InventorySlot : MonoBehaviour
         if (type == ItemType.Air)
         {
             itemIcon.sprite = InventoryManager.instance.airImage;
+        }
+        else if (type == ItemType.Block)
+        {
+            canPlace = true;
+        }
+        else if (type == ItemType.Pull)
+        {
+            canPlace = false;
         }
     }
 
@@ -71,6 +80,7 @@ public class InventorySlot : MonoBehaviour
         itemAmount.gameObject.SetActive(false);
         SetBlockType(ItemType.Air);
         isEmptySlot = true;
+        canPlace = false;
     }
 
     public void SetIcon(Sprite icon)

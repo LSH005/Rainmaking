@@ -21,6 +21,11 @@ public class InventoryManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        ClearSelect();
+    }
+
     private void Update()
     {
         for (int i = 0; i < slots.Length; i++)
@@ -88,6 +93,14 @@ public class InventoryManager : MonoBehaviour
             {
                 slot.AddItemCount(itemCount);
             }
+        }
+    }
+
+    public void ShowInventory(bool show)
+    {
+        foreach (var slot in slots)
+        {
+            slot.gameObject.SetActive(show);
         }
     }
 

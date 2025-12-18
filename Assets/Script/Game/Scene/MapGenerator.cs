@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+    public static MapGenerator Instance { get; private set; }
+
     [Header("지형")]
     public GameObject terrain;
 
@@ -13,6 +15,16 @@ public class MapGenerator : MonoBehaviour
 
     [Header("노이즈")]
     public float noiseScale = 20f;
+
+    [Header("블록")]
+    public GameObject singleBlock;
+
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     void Start()
     {
@@ -31,18 +43,22 @@ public class MapGenerator : MonoBehaviour
                 float noise = Mathf.PerlinNoise(nx, nz);
                 int y = Mathf.FloorToInt(noise * maxHeight);
 
-                SetBlock(x - halfX, y, z - HalfZ);
+                SetBlock(x - halfX, y, z - HalfZ, terrain, terrainGap);
             }
         }
 
     }
 
-    void SetBlock(int x, int y, int z)
+    void SetBlock(int x, int y, int z, GameObject obj, int gap)
     {
         x *= terrainGap; z *= terrainGap;
 
-        var go = Instantiate(terrain, new Vector3(x, y, z), Quaternion.identity, transform);
+        var go = Instantiate(obj, new Vector3(x, y, z), Quaternion.identity, transform);
         go.name = $"Terrain : {x} // {y} // {z}";
-        go.transform.SetParent(transform);
+    }
+
+    public void SetBlockVector3(Vector3 blockPos)
+    {
+        Instantiate(singleBlock, blockPos, Random.rotation);
     }
 }
