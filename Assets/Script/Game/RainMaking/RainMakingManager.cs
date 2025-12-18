@@ -50,9 +50,23 @@ public class RainMakingManager : MonoBehaviour
             UpdateTimerDisplay();
         }
 
+        if (Test.Instance.isTest)
+        {
+            if (Input.GetKey(KeyCode.Keypad3))
+            {
+                elapsedTime += 60;
+                leftRainMakingTime = 5f;
+            }
+            else if (Input.GetKey(KeyCode.Keypad4))
+            {
+                elapsedTime -= 60;
+                leftRainMakingTime = 5f;
+            }
+        }
+
         if (targetTime <= elapsedTime)
         {
-
+            ScreenTransition.JustLoadScene("End", "LoadingScene");
         }
     }
 
@@ -91,7 +105,8 @@ public class RainMakingManager : MonoBehaviour
         ItemType selectedItem = InventoryManager.instance.GetSelectedItem();
         if (selectedItem != ItemType.Pull) return false;
 
-        Vector3 playerPos = PlayerCamera.Instance.transform.position;
+        Vector3 playerPos = Vector3.zero;
+        if (PlayerCamera.Instance != null) playerPos = PlayerCamera.Instance.transform.position;
         foreach (var pos in allRainMakingPos)
         {
             if (pos.CanRainMaking(playerPos, distance)) return true;

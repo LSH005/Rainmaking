@@ -37,9 +37,12 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.Keypad1))
+        if (Test.Instance.isTest)
         {
-            AddItem(ItemType.Block, 5);
+            if (Input.GetKey(KeyCode.Keypad1))
+            {
+                AddItem(ItemType.Block, 5);
+            }
         }
     }
 

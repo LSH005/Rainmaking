@@ -15,9 +15,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Hell.unity
     guid: cc6e402df260d4b4ebcf671b20851111
   - enabled: 1
+    path: Assets/Scenes/Mulmeoggae.unity
+    guid: 456b89db9b3d943428b6981726c9a6df
+  - enabled: 1
     path: Assets/Scenes/LoadingScene.unity
     guid: 9b488dc3b2aeab049b6a1df9690ee2b3
   - enabled: 1
     path: Assets/Scenes/LoadingScene2.unity
     guid: 392616e0695dbcc4684584d5daed2203
+  - enabled: 1
+    path: Assets/Scenes/End.unity
+    guid: 89b7f3657fbfcda459c64b4a177221fc
   m_configObjects: {}
