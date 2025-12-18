@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Eva.unity
+    guid: 8dc1d4b873d24354891d2b9583e61649
+  - enabled: 1
+    path: Assets/Scenes/Hell.unity
+    guid: cc6e402df260d4b4ebcf671b20851111
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 9b488dc3b2aeab049b6a1df9690ee2b3
   m_configObjects: {}

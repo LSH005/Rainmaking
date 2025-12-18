@@ -7,6 +7,6 @@ public class Terrain : MonoBehaviour
 
     public void ToggleObj(bool on)
     {
-        toggle.SetActive(on);
+        if (toggle != null) toggle.SetActive(on);
     }
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7211743705218981110}
   - component: {fileID: 1973997292760875293}
   m_Layer: 0
-  m_Name: TestBlockDrop
+  m_Name: BlockDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
