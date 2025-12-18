@@ -35,6 +35,8 @@ public class PhoukEditManager : MonoBehaviour
     {
         if (!isActived)
         {
+            if (ReleaseConditions()) return;
+
             if (Pressing(KeyCode.N))
             {
                 StartPhoukEdit();
@@ -42,7 +44,7 @@ public class PhoukEditManager : MonoBehaviour
         }
         else
         {
-            if (!Pressing(KeyCode.N))
+            if (!Pressing(KeyCode.N) || ReleaseConditions())
             {
                 StopPhoukEdit();
             }
@@ -89,4 +91,9 @@ public class PhoukEditManager : MonoBehaviour
     }
 
     bool Pressing(KeyCode key) => Input.GetKey(key);
+
+    bool ReleaseConditions()
+    {
+        return ScreenTransition.isTransitioning || GamePause.isPaused;
+    }
 }

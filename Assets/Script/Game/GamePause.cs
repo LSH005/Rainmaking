@@ -1,9 +1,9 @@
-using UnityEditor.SceneTemplate;
 using UnityEngine;
 
 public class GamePause : MonoBehaviour
 {
     public static bool isPaused = false;
+    public GameObject toggleObj;
 
     void Update()
     {
@@ -15,6 +15,7 @@ public class GamePause : MonoBehaviour
 
     private void PauseToggle(bool pause)
     {
+        if (toggleObj != null) toggleObj.SetActive(pause);
         Time.timeScale = pause ? 0.000000f : 1.0000000f;
         Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
         isPaused = pause;

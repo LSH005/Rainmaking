@@ -5,9 +5,14 @@ public class TerrainToggle : MonoBehaviour
     [Header("À§Ä¡")]
     public Transform posTarget;
 
+    private void Start()
+    {
+        if (PlayerCamera.Instance != null && posTarget == null) posTarget = PlayerCamera.Instance.transform;
+    }
+
     private void Update()
     {
-        transform.position = posTarget.position;
+        if (posTarget != null) transform.position = posTarget.position;
     }
 
     private void OnTriggerEnter(Collider other)

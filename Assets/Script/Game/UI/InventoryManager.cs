@@ -7,9 +7,9 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager instance { get; private set; }
     public InventorySlot[] slots;
 
-    [Header("����")]
+    [Header("빈찬합")]
     public Sprite airImage;
-    [Header("����")]
+    [Header("아이템")]
     public Sprite blockImage;
     public Sprite pullImage;
 
@@ -104,7 +104,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    InventorySlot FindSlot(ItemType type)
+    public InventorySlot FindSlot(ItemType type)
     {
         for (int i = 0; i < slots.Length; i++)
         {
@@ -131,7 +131,7 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
-    Sprite GetImageFromBlockType(ItemType type)
+    public Sprite GetImageFromBlockType(ItemType type)
     {
         switch (type)
         {

@@ -3,6 +3,7 @@ using UnityEngine;
 public class Manual : MonoBehaviour
 {
     public GameObject togglePanel;
+    public GameObject text;
     bool isActived = false;
 
     private void Start()
@@ -12,14 +13,16 @@ public class Manual : MonoBehaviour
 
     void Update()
     {
-        if (isActived && !Pressing(KeyCode.Tab))
+        if ((isActived && !Pressing(KeyCode.Tab)) || ReleaseConditions())
         {
             TogglePanel(false);
         }
-        else if (!isActived && Pressing(KeyCode.Tab))
+        else if (!isActived && Pressing(KeyCode.Tab) && !ReleaseConditions())
         {
             TogglePanel(true);
         }
+
+        text.SetActive(!ReleaseConditions());
     }
 
     void TogglePanel(bool on)
@@ -29,6 +32,10 @@ public class Manual : MonoBehaviour
     }
 
     
+    bool ReleaseConditions()
+    {
+        return ScreenTransition.isTransitioning || GamePause.isPaused;
+    }
 
     bool Pressing(KeyCode key) => Input.GetKey(key);
 }
