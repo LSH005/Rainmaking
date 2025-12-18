@@ -66,6 +66,7 @@ public class BlockDrop : MonoBehaviour
     {
         AudioClip clip = AudioManager.GetRandomSound(grabSound);
         AudioManager.Instance.Play3DSound(clip, transform.position);
+        InventoryManager.instance.AddItem(ItemType.Block, 1);
 
         Destroy(gameObject);
     }
